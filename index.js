@@ -17,9 +17,12 @@ require('dotenv').config();
 app.use(cors());
 app.use(express.json());
 
+// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.p33egdz.mongodb.net/?retryWrites=true&w=majority`;
+
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.p33egdz.mongodb.net/?retryWrites=true&w=majority`;
+console.log(uri)
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
@@ -54,6 +57,7 @@ const appointmentOptionsCollections = client.db('doctor-portal-server').collecti
 const bookingcollection = client.db('doctor-portal-server').collection('bookings');
 const usersCollection = client.db('doctor-portal-server').collection('users');
 const doctorsCollection = client.db('doctor-portal-server').collection('doctors');
+// const paymentsCollection = client.db('doctorsPortal').collection('payments');
 
 
 
@@ -149,6 +153,20 @@ app.post('/create-payment-intent', async (req, res) => {
     });
 });
 
+// app.post('/payments', async (req, res) =>{
+//     const payment = req.body;
+//     const result = await paymentsCollection.insertOne(payment);
+//     const id = payment.bookingId
+//     const filter = {_id: ObjectId(id)}
+//     const updatedDoc = {
+//         $set: {
+//             paid: true,
+//             transactionId: payment.transactionId
+//         }
+//     }
+//     const updatedResult = await bookingsCollection.updateOne(filter, updatedDoc)
+//     res.send(result);
+// })
 
 
 
